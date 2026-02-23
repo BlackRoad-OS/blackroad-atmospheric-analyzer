@@ -1,32 +1,55 @@
-# blackroad-atmospheric-analyzer
+# blackroad-xml-parser
 
-[![GitHub](https://img.shields.io/badge/GitHub-BlackRoad-OS-purple?style=for-the-badge&logo=github)](https://github.com/BlackRoad-OS/blackroad-atmospheric-analyzer)
-[![Status](https://img.shields.io/badge/Status-Active-success?style=for-the-badge)](https://github.com/BlackRoad-OS/blackroad-atmospheric-analyzer)
-[![BlackRoad](https://img.shields.io/badge/BlackRoad-OS-black?style=for-the-badge)](https://blackroad.io)
+**BlackRoad XML Parser** — parse, validate, XPath query, transform to JSON, and diff XML/RSS/Atom documents.
 
-# 🖤🛣️ BlackRoad Atmospheric Analyzer
+## Features
 
-Part of the BlackRoad Product Empire - 350+ enterprise solutions
+- 📄 **Multi-format parsing** — XML, RSS 2.0, Atom feeds with auto-detection
+- 🔍 **XPath queries** — ElementTree-based queries with result history
+- ✅ **Schema validation** — rules: required_element, attribute_required, text_pattern, max_occurrences
+- 🔄 **JSON transformation** — structured tree, flattened rows, RSS/Atom feed normalization
+- ↔️ **Document diffing** — tree-level diff showing added/removed/modified elements
+- 🔖 **Namespace extraction** — automatic xmlns prefix/URI mapping
+- 💾 **SQLite persistence** — 4-table schema for docs, rules, XPath history, transforms
+- 🎨 **ANSI CLI** — 6 subcommands with color output
 
-## 🚀 Quick Start
+## Install
 
 ```bash
-./blackroad-atmospheric-analyzer.sh
+pip install pytest pytest-cov
 ```
 
-## 🎨 BlackRoad Design System
+## Usage
 
-- **Hot Pink**: #FF1D6C
-- **Amber**: #F5A623  
-- **Electric Blue**: #2979FF
-- **Violet**: #9C27B0
+```bash
+# Parse documents
+python src/xml_parser.py parse '<catalog><book id="1"><title>Test</title></book></catalog>' --name catalog
+python src/xml_parser.py parse feed.rss --file --name my-feed
 
-## 📚 Documentation
+# XPath queries
+python src/xml_parser.py xpath catalog ".//book"
+python src/xml_parser.py xpath catalog ".//title" --limit 10
 
-Full docs: https://docs.blackroad.io
+# Transform to JSON
+python src/xml_parser.py transform catalog --output catalog.json
+python src/xml_parser.py transform my-feed  # auto-detects RSS/Atom
 
-## 🖤 BlackRoad Empire
+# Schema validation
+python src/xml_parser.py validate catalog
 
-Part of 350+ products across 46 categories. Built with ∞ vision.
+# Diff two documents
+python src/xml_parser.py diff catalog catalog-v2 --verbose
 
-**BlackRoad OS, Inc.** | Built with Claude
+# List all documents
+python src/xml_parser.py list
+```
+
+## Testing
+
+```bash
+pytest tests/ -v --cov=src --cov-report=term-missing
+```
+
+## License
+
+Proprietary — BlackRoad OS, Inc.
